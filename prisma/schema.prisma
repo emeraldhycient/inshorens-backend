@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  email        String     @unique
+  phoneNumber  String?    @unique
+  firstName    String
+  lastName     String
+  password     String
+  location     Json?
+  // location     IpInfo?    @relation(fields: [locationId], references: [id])
+  claims       Claim[]
+  profileImage String
+  kycStatus    kycStatus @default(NOT_STARTED)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  // locationId     String?    @db.ObjectId
+  // IpInfo       IpInfo?    @relation(fields: [locationId], references: [id])
+}
+
+model Claim {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  claimType      ClaimType   @relation(fields: [claimTypeId], references: [id])
+  claimTypeId    String      @db.ObjectId
+  description    String
+  costEstimation Int         @db.Int
+  proofOfDamage  String
+  otherDocument  String?
+  status         claimStatus @default(NOT_STARTED)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  User           User?       @relation(fields: [userId], references: [id])
+  userId         String?     @db.ObjectId
+}
+
+model ClaimType {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  Claim Claim[]
+}
+
+// type Address {
+//   street String?
+//   city   String?
+//   state  String?
+//   zip    String?
+// }
+
+// type Location {
+//   borders     String?
+//   continent   String?
+//   country     String?
+//   countryCode String?
+//   dialCode    String?
+//   ipAddress   String?
+//   isEu        String?
+//   latitude    String?
+//   longitude   String?
+//   timezone    String?
+//   utc         String?
+//   address     Address?
+// }
+
+// model IpInfo {
+//   id             String    @id @default(auto()) @map("_id") @db.ObjectId
+//   ip             String?
+//   success        String?
+//   type           String?
+//   continent      String?
+//   continent_code String?
+//   country        String?
+//   country_code   String?
+//   region         String?
+//   region_code    String?
+//   city           String?
+//   latitude       String?
+//   longitude      String?
+//   is_eu          String?
+//   postal         String?
+//   calling_code   String?
+//   capital        String?
+//   borders        String?
+//   timezone       timezone? @relation(fields: [timezoneId], references: [id])
+//   timezoneId     String?   @db.ObjectId
+//   // User           User[]
+// }
+
+// model timezone {
+//   id           String   @id @default(auto()) @map("_id") @db.ObjectId
+//   abbr         String?
+//   is_dst       String?
+//   offset       Int?     @db.Int
+//   utc          String?
+//   current_time String?
+//   abb          String?
+//   IpInfo       IpInfo[]
+// }
+
+enum claimStatus {
+  NOT_STARTED
+  IN_REVIEW
+  COMPLETED
+}
+
+enum kycStatus {
+  NOT_STARTED
+  IN_REVIEW
+  COMPLETED
+}
