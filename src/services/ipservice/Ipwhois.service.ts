@@ -1,7 +1,6 @@
 import axios from "axios"
 import { IpInfo } from "../../types/@types";
 
-
 export const getIpServiceInfo = async (ipAddress: string) => {
     try {
         const resp = await axios.get(`http://ipwho.is/${ipAddress}`);
