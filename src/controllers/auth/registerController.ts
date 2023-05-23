@@ -1,11 +1,11 @@
 import { PrismaClient } from '@prisma/client'
-
+import nodemailer from 'nodemailer';
 const prisma = new PrismaClient()
 const bcrypt = require('bcryptjs');
 import { signAccessToken } from '../../utils/token/jwt'
 import { messages } from '../../constants/messages';
 import { getIpServiceInfo } from '../../services/ipservice/Ipwhois.service';
-import { create } from 'domain';
+import crypto from 'crypto';
 
 const registerController = async (req: any, res: any) => {
     const data = req.body;
@@ -23,6 +23,8 @@ const registerController = async (req: any, res: any) => {
         return
     }
 
+    const confirmationToken = crypto.randomBytes(20).toString('hex');
+
     try {
         const location = await getIpServiceInfo(ip)
 
@@ -33,9 +35,38 @@ const registerController = async (req: any, res: any) => {
         data.password = bcrypt.hashSync(data.password, salt);
 
         const user = await prisma.user.create({
-            data: { ...data, profileImage: "https://picsum.photos/200", location},
+            data: { ...data, profileImage: "https://picsum.photos/200", location, confirmationToken },
         })
         const accessToken = await signAccessToken(user)
+
+        let testAccount = await nodemailer.createTestAccount();
+
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+            host: "smtp.ethereal.email",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: testAccount.user, // generated ethereal user
+                pass: testAccount.pass, // generated ethereal password
+            },
+        });
+
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+            from: '"Fred Foo 👻" <foo@example.com>', // sender address
+            to: "bar@example.com, baz@example.com", // list of receivers
+            subject: "Hello ✔", // Subject line
+            text: "Hello world?", // plain text body
+            html: `<p>Please click the following link to confirm your account: 
+        ${req.protocol}://${req.get('host')}/confirm/${confirmationToken}</p>`, // html body
+        });
+
+        console.log("Message sent: %s", info.messageId);
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+        // Preview only available when sending through an Ethereal account
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
         res.status(201).json({
             message: messages?.accountCreation.success,

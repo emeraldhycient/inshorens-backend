@@ -11,19 +11,21 @@ datasource db {
 }
 
 model User {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
-  email        String     @unique
-  phoneNumber  String?    @unique
-  firstName    String
-  lastName     String
-  password     String
-  location     Json?
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  email             String    @unique
+  phoneNumber       String?   @unique
+  firstName         String
+  lastName          String
+  password          String
+  location          Json?
   // location     IpInfo?    @relation(fields: [locationId], references: [id])
-  claims       Claim[]
-  profileImage String
-  kycStatus    kycStatus @default(NOT_STARTED)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  claims            Claim[]
+  profileImage      String
+  confirmationToken String
+  emailVerified         Boolean   @default(false)
+  kycStatus         kycStatus @default(NOT_STARTED)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
   // locationId     String?    @db.ObjectId
   // IpInfo       IpInfo?    @relation(fields: [locationId], references: [id])
 }
@@ -116,4 +118,9 @@ enum kycStatus {
   NOT_STARTED
   IN_REVIEW
   COMPLETED
+}
+
+enum confirmed {
+  true
+  false
 }
