@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 const confirmTokenController = async (req: Request, res: Response) => {
     try {
-        const { token } = req.params;
+        const { token  } = req.params;
 
         // Find user with the provided confirmation token
         const user = await prisma.user.findUnique({

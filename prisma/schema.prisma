@@ -21,7 +21,7 @@ model User {
   // location     IpInfo?    @relation(fields: [locationId], references: [id])
   claims            Claim[]
   profileImage      String
-  confirmationToken String
+  confirmationToken String @unique
   emailVerified         Boolean   @default(false)
   kycStatus         kycStatus @default(NOT_STARTED)
   createdAt         DateTime  @default(now())
