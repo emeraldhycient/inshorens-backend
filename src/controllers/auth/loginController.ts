@@ -26,7 +26,7 @@ const loginController = async (req: any, res: any) => {
 
         const checkPassword = bcrypt.compareSync(password, user?.password)
         if (!checkPassword) {
-            res.status(500).json({ message: "provided email address or password is invalid" })
+            res.status(400).json({ message: "provided email address or password is invalid" })
         }
         const accessToken = await signAccessToken(user)
 
