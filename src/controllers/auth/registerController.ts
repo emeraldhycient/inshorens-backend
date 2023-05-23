@@ -83,9 +83,9 @@ const registerController = async (req: any, res: any) => {
         })
         return
 
-    } catch (error) {
+    } catch (error:any) {
         console.log(error)
-        res.status(500).json({ message: error })
+        res.status(500).json({ message: error?.message || error })
         return
     }
 
