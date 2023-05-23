@@ -54,12 +54,12 @@ const registerController = async (req: any, res: any) => {
 
         // send mail with defined transport object
         let info = await transporter.sendMail({
-            from: '"Fred Foo 👻" <foo@example.com>', // sender address
-            to: "bar@example.com, baz@example.com", // list of receivers
-            subject: "Hello ✔", // Subject line
+            from: '"inshorens" <foo@example.com>', // sender address
+            to: `${data.email}`, // list of receivers
+            subject: "Email confirmation from inshorens ✅✔", // Subject line
             text: "Hello world?", // plain text body
             html: `<p>Please click the following link to confirm your account: 
-        ${req.protocol}://${req.get('host')}/confirm/${confirmationToken}</p>`, // html body
+        ${req.protocol}://${req.get('host')}/api/v1/confirm/${confirmationToken}</p>`, // html body
         });
 
         console.log("Message sent: %s", info.messageId);
