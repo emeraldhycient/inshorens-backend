@@ -30,14 +30,6 @@ const registerController = async (req: any, res: any) => {
 
         console.log(location)
 
-        const salt = bcrypt.genSaltSync(10);
-
-        data.password = bcrypt.hashSync(data.password, salt);
-
-        const user = await prisma.user.create({
-            data: { ...data, profileImage: "https://picsum.photos/200", location, confirmationToken },
-        })
-        const accessToken = await signAccessToken(user)
 
         let testAccount = await nodemailer.createTestAccount();
 
@@ -53,37 +45,57 @@ const registerController = async (req: any, res: any) => {
         });
 
         // send mail with defined transport object
-        let info = await transporter.sendMail({
-            from: '"inshorens" <foo@example.com>', // sender address
-            to: `${data.email}`, // list of receivers
-            subject: "Email confirmation from inshorens ✅✔", // Subject line
-            text: "Hello world?", // plain text body
-            html: `<p>Please click the following link to confirm your account: 
+        try {
+
+            let info = await transporter.sendMail({
+                from: '"inshorens" <foo@example.com>', // sender address
+                to: `${data.email}`, // list of receivers
+                subject: "Email confirmation from inshorens ✅✔", // Subject line
+                text: "Hello world?", // plain text body
+                html: `<p>Please click the following link to confirm your account: 
         ${req.protocol}://${req.get('host')}/api/v1/confirm/${confirmationToken}</p>`, // html body
-        });
+            });
 
-        console.log("Message sent: %s", info.messageId);
-        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+            console.log("Message sent: %s", info.messageId);
+            // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-        // Preview only available when sending through an Ethereal account
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+            // Preview only available when sending through an Ethereal account
+            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
-        res.status(201).json({
-            message: messages?.accountCreation.success,
-            accessToken,
-            user: {
 
-                id: user.id,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                createdAt: user.createdAt,
-                updatedAt: user.updatedAt
-            }
-        })
-        return
+            const salt = bcrypt.genSaltSync(10);
 
-    } catch (error:any) {
+            data.password = bcrypt.hashSync(data.password, salt);
+
+            const user = await prisma.user.create({
+                data: { ...data, profileImage: "https://picsum.photos/200", location, confirmationToken },
+            })
+            const accessToken = await signAccessToken(user)
+
+
+            res.status(201).json({
+                message: messages?.accountCreation.success,
+                accessToken,
+                user: {
+
+                    id: user.id,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    createdAt: user.createdAt,
+                    updatedAt: user.updatedAt
+                }
+            })
+            return
+
+        } catch (error: any) {
+            console.log(error?.message || error)
+            res.status(500).json({ message: error?.message || error })
+            return
+        }
+
+
+    } catch (error: any) {
         console.log(error?.message || error)
         res.status(500).json({ message: error?.message || error })
         return
