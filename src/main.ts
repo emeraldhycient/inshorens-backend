@@ -21,6 +21,7 @@ async function main() {
     // app.use(express.static("public"))
     app.get("/api/v1/", (req: any, res: any) => {
         res.send(req.ip)
+        res.status(200)
         return
     })
 
