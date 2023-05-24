@@ -51,10 +51,9 @@ const registerController = async (req: any, res: any) => {
                 from: '"inshorens" <foo@example.com>', // sender address
                 to: `${data.email}`, // list of receivers
                 subject: "Email confirmation from inshorens ✅✔", // Subject line
-                text: "Hello world?", // plain text body
+                // text: "Hello world?", // plain text body
                 html: `<!DOCTYPE html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
-
 <head>
 	<title></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
