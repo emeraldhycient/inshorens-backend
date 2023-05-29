@@ -31,7 +31,7 @@ const loginController = async (req: any, res: any) => {
         }
         const accessToken = await signAccessToken(user)
 
-        res.status(200).json({ user: { ...user, password: undefined }, accessToken,message:messages?.accountLogin?.success })
+        res.status(200).json({ user: { ...user, password: undefined, confirmationToken:undefined }, accessToken,message:messages?.accountLogin?.success })
         return
     } catch (error: any) {
         console.log(error?.message || error)
