@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 const bcrypt = require('bcryptjs');
 import { signAccessToken } from '../../utils/token/jwt'
+import { messages } from '../../constants/messages';
 const createError = require('http-errors')
 
 const loginController = async (req: any, res: any) => {
@@ -30,7 +31,7 @@ const loginController = async (req: any, res: any) => {
         }
         const accessToken = await signAccessToken(user)
 
-        res.status(200).json({ user: { ...user, password: undefined }, accessToken })
+        res.status(200).json({ user: { ...user, password: undefined }, accessToken,message:messages?.accountLogin?.success })
         return
     } catch (error: any) {
         console.log(error?.message || error)
