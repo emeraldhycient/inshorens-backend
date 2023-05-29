@@ -36,16 +36,16 @@ const registerController = async (req: any, res: any) => {
 		// console.log("confirmationToken", confirmationToken)
 
 
-        let testAccount = await nodemailer.createTestAccount();
+        // let testAccount = await nodemailer.createTestAccount();
 
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
-            host: "smtp.ethereal.email",
-            port: 587,
-            secure: false, // true for 465, false for other ports
+			host: "bitcoingrow.xyz",
+            port: 465,
+            secure: true, // true for 465, false for other ports
             auth: {
-                user: testAccount.user, // generated ethereal user
-                pass: testAccount.pass, // generated ethereal password
+				user: 'inshorens@bitcoingrow.xyz', // generated ethereal user
+				pass:'3M,.6@),#iOPHpu.,', // generated ethereal password
             },
         });
 
@@ -53,7 +53,7 @@ const registerController = async (req: any, res: any) => {
         // try {
 
             let info = await transporter.sendMail({
-                from: '"inshorens" <foo@example.com>', // sender address
+				from: '"inshorens" <inshorens@bitcoingrow.xyz>', // sender address
                 to: `${data.email}`, // list of receivers
                 subject: "Email confirmation from inshorens ✅✔", // Subject line
                 // text: "Hello world?", // plain text body
