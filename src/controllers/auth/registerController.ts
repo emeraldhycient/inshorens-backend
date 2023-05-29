@@ -8,27 +8,32 @@ import { getIpServiceInfo } from '../../services/ipservice/Ipwhois.service';
 import crypto from 'crypto';
 
 const registerController = async (req: any, res: any) => {
-    const data = req.body;
-    const ip = req?.ip;
+  
 
-    const existingUser = await prisma.user.findUnique({
-        where: {
-            email: data.email
-        }
-    })
-    if (existingUser) {
-        res.status(400).json({
-            message: messages.accountCreation?.emailExist
-        })
-        return
-    }
+	try {
+		
+		const data = req.body;
+		const ip = req?.ip;
 
-    const confirmationToken = crypto.randomBytes(20).toString('hex');
+		const existingUser = await prisma.user.findUnique({
+			where: {
+				email: data.email
+			}
+		})
+		if (existingUser) {
+			res.status(400).json({
+				message: messages.accountCreation?.emailExist
+			})
+			return
+		}
 
-    try {
+		const confirmationToken = crypto.randomBytes(20).toString('hex');
+
         const location = await getIpServiceInfo(ip)
 
-        console.log(location)
+		// console.log(location)
+		
+		// console.log("confirmationToken", confirmationToken)
 
 
         let testAccount = await nodemailer.createTestAccount();
@@ -266,7 +271,7 @@ const registerController = async (req: any, res: any) => {
 																				<table class="button_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 																					<tr>
 																						<td class="pad" style="padding-bottom:35px;padding-left:10px;padding-right:10px;padding-top:40px;text-align:center;">
-																							<div class="alignment" align="center"><!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href='${req.protocol}://${req.get('host')}/api/v1/confirm/${confirmationToken}</p>' style="height:62px;width:169px;v-text-anchor:middle;" arcsize="97%" stroke="false" fillcolor="#744fc6"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px"><![endif]--><a href="https://inshorens-api.onrender.com/api/v1/confirm/" target="_blank" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#744fc6;border-radius:60px;width:auto;border-top:0px solid transparent;font-weight:undefined;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:15px;padding-bottom:15px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;"><span style="padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:normal;"><span dir="ltr" style="margin: 0; word-break: break-word; line-height: 32px;"><strong>Verify Account</strong></span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
+																							<div class="alignment" align="center"><!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href='${req.protocol}://${req.get('host')}/api/v1/confirm/${confirmationToken}/'</p> style="height:62px;width:169px;v-text-anchor:middle;" arcsize="97%" stroke="false" fillcolor="#744fc6"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px"><![endif]--><a href='${req.protocol}://${req.get('host')}/api/v1/confirm/${confirmationToken}' target="_blank" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#744fc6;border-radius:60px;width:auto;border-top:0px solid transparent;font-weight:undefined;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:15px;padding-bottom:15px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;"><span style="padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:normal;"><span dir="ltr" style="margin: 0; word-break: break-word; line-height: 32px;"><strong>Verify Account</strong></span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
 																						</td>
 																					</tr>
 																				</table>
