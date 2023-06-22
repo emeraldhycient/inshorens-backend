@@ -10,10 +10,10 @@ const loginController = async (req: any, res: any) => {
     const { email, password } = req.body;
     try {
 
-
+        const lowerCaseEmail = email.toLowerCase()
         const user = await prisma.user.findUnique({
             where: {
-                email
+                email : lowerCaseEmail
             }
         });
 

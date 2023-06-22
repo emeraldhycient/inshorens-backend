@@ -21,8 +21,8 @@ model User {
   // location     IpInfo?    @relation(fields: [locationId], references: [id])
   claims            Claim[]
   profileImage      String
-  confirmationToken String @unique
-  emailVerified         Boolean   @default(false)
+  confirmationToken String    @unique
+  emailVerified     Boolean   @default(false)
   kycStatus         kycStatus @default(NOT_STARTED)
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
@@ -50,6 +50,60 @@ model ClaimType {
   title String
   Claim Claim[]
 }
+
+model Policy {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  price       Int        @db.Int
+  banner      String
+  coverages   Coverage[]
+}
+
+model Coverage {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  price       Int     @db.Int
+  Policy      Policy? @relation(fields: [policyId], references: [id])
+  policyId    String? @db.ObjectId
+}
+
+model Plan {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  price    Int     @db.Int
+  duration String
+  addons   Addon[]
+  isActive Boolean @default(true)
+}
+
+model Addon {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  title  String
+  price  String
+  Plan   Plan?   @relation(fields: [planId], references: [id])
+  planId String? @db.ObjectId
+}
+
+enum claimStatus {
+  NOT_STARTED
+  IN_REVIEW
+  COMPLETED
+}
+
+enum kycStatus {
+  NOT_STARTED
+  IN_REVIEW
+  COMPLETED
+}
+
+enum confirmed {
+  true
+  false
+}
+
+
 
 // type Address {
 //   street String?
@@ -107,20 +161,3 @@ model ClaimType {
 //   abb          String?
 //   IpInfo       IpInfo[]
 // }
-
-enum claimStatus {
-  NOT_STARTED
-  IN_REVIEW
-  COMPLETED
-}
-
-enum kycStatus {
-  NOT_STARTED
-  IN_REVIEW
-  COMPLETED
-}
-
-enum confirmed {
-  true
-  false
-}

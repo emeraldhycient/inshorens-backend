@@ -15,6 +15,8 @@ const registerController = async (req: any, res: any) => {
 		const data = req.body;
 		const ip = req?.ip;
 
+		data.email = data?.email.toLowerCase()
+
 		const existingUser = await prisma.user.findUnique({
 			where: {
 				email: data.email
@@ -438,14 +440,13 @@ const registerController = async (req: any, res: any) => {
             })
             const accessToken = await signAccessToken(user)
 
-
             res.status(201).json({
                 message: messages?.accountCreation.success,
                 accessToken,
                 user: {
 
                     id: user.id,
-                    email: user.email,
+					email: user.email.toLowerCase(),
                     firstName: user.firstName,
                     lastName: user.lastName,
                     createdAt: user.createdAt,
