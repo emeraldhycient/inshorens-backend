@@ -53,7 +53,7 @@ model ClaimType {
 
 model Policy {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
+  title       String @unique
   description String
   price       Int        @db.Int
   banner      String

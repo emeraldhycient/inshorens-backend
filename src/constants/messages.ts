@@ -34,6 +34,18 @@ export const createClaim = {
     success: "Claim  created successfully",
     fail: "claim creation failed",
 }   
+export const createPolicy = {
+    success: "Policy  created successfully",
+    fail: "policy creation failed",
+}   
+export const getPolicy = {
+    success: "Policy  fetched successfully",
+    fail: "unable to fetch policy,an internal server error occured",
+}   
+export const updatePolicy = {
+    success: "Policy  updated successfully",
+    fail: "unable to update policy,an internal server error occured",
+}   
 
 
 export const messages = {
@@ -42,5 +54,8 @@ export const messages = {
     accountUpdate,
     claimCategory,
     fetchClaimCategory,
-    createClaim
+    createClaim,
+    createPolicy,
+    getPolicy,
+    updatePolicy
 }
