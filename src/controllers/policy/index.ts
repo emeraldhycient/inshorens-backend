@@ -1,3 +1,3 @@
-import { createPolicy,getAllPolicy,getPolicyById } from "./policy";
+import { createPolicy,getAllPolicy,getPolicyById,updatePolicy } from "./policyController";
 
-export { createPolicy, getAllPolicy, getPolicyById };
+export { createPolicy, getAllPolicy, getPolicyById ,updatePolicy};
