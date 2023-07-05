@@ -6,14 +6,14 @@ const prisma = new PrismaClient()
 
 export const createCoverage = async (req: any, res: any) => {
     const { title, description, price, banner, policyId } = req.body
-    const exist = await prisma.coverage.findUnique({
-        where: {
-            title
-        }
+    // const exist = await prisma.coverage.findUnique({
+    //     where: {
+    //         title
+    //     }
 
-    }
-    )
-    if (exist) return res.status(400).json({ message: `${messages?.claimCategory?.fail}, Title already exist` })
+    // }
+    // )
+    // if (exist) return res.status(400).json({ message: `${messages?.claimCategory?.fail}, Title already exist` })
     try {
         const coverage = policyId ? await prisma.coverage.create({
             data: {

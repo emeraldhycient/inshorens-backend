@@ -62,7 +62,7 @@ model Policy {
 
 model Coverage {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  title       String @unique
+  title       String
   description String
   banner      String
   price       Int     @db.Int
