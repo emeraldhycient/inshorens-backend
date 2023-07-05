@@ -1,3 +1,4 @@
+import { Coverage } from './../../../node_modules/.prisma/client/index.d';
 import { PrismaClient } from '@prisma/client'
 import { messages } from '../../constants/messages'
 
@@ -5,7 +6,7 @@ import { messages } from '../../constants/messages'
 const prisma = new PrismaClient()
 
 export const createCoverage = async (req: any, res: any) => {
-    const { title, description, price, banner, coverages } = req.body
+    const { title, description, price, banner, policyId } = req.body
     const exist = await prisma.coverage.findUnique({
         where: {
             title
@@ -15,8 +16,13 @@ export const createCoverage = async (req: any, res: any) => {
     )
     if (exist) return res.status(400).json({ message: `${messages?.claimCategory?.fail}, Title already exist` })
     try {
-        const policy = await prisma.coverage.create({
+        const coverage = await prisma.coverage.create({
             data: {
+                Policy: {
+                    connect: {
+                        id : policyId
+                    }
+                },
                 title,
                 description,
                 price,
@@ -25,7 +31,7 @@ export const createCoverage = async (req: any, res: any) => {
         })
         res.status(200).json({
             message: messages.createPolicy.success,
-            policy
+            coverage
         })
     } catch (error) {
         console.log(error)
@@ -40,10 +46,14 @@ export const createCoverage = async (req: any, res: any) => {
 
 export const getAllCoverage = async (req: any, res: any) => {
     try {
-        const policy = await prisma.coverage.findMany()
+        const coverage = await prisma.coverage.findMany({
+            include: {
+                Policy: true, 
+            },
+        })
         res.status(200).json({
             message: messages.getPolicy.success,
-            policy
+            coverage
         })
     } catch (error) {
         res.status(500).json({
@@ -57,14 +67,17 @@ export const getAllCoverage = async (req: any, res: any) => {
 export const getCoverageById = async (req: any, res: any) => {
     const { id } = req.params
     try {
-        const policy = await prisma.coverage.findUnique({
+        const coverage = await prisma.coverage.findUnique({
             where: {
                 id
-            }
+            },
+            include: {
+                Policy: true,
+            },
         })
         res.status(200).json({
             message: messages.getPolicy.success,
-            policy
+            coverage
         })
     } catch (error) {
         res.status(500).json({
@@ -79,7 +92,7 @@ export const updateCoverage = async (req: any, res: any) => {
     const { id } = req.params
     const { title, description, price, banner, coverages } = req.body
     try {
-        const policy = await prisma.coverage.update({
+        const coverage = await prisma.coverage.update({
             where: {
                 id
             },
@@ -92,7 +105,7 @@ export const updateCoverage = async (req: any, res: any) => {
         })
         res.status(200).json({
             message: messages.updatePolicy.success,
-            policy
+            coverage
         })
     } catch (error) {
         console.log(error)

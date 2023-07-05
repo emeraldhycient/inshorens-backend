@@ -41,7 +41,11 @@ export const createPolicy = async (req: any, res: any) => {
 
 export const getAllPolicy = async (req: any, res: any) => {
     try {
-        const policy = await prisma.policy.findMany()
+        const policy = await prisma.policy.findMany({
+            include: {
+                coverages: true, 
+            }
+        })
         res.status(200).json({
             message: messages.getPolicy.success,
             policy
@@ -61,7 +65,10 @@ export const getPolicyById = async (req: any, res: any) => {
         const policy = await prisma.policy.findUnique({
             where: {
                 id
-            }
+            },
+            include: {
+                coverages: true, 
+            },
         })
         res.status(200).json({
             message: messages.getPolicy.success,
