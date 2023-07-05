@@ -5,6 +5,6 @@ const router = express.Router();
 router.post("/policy", createPolicy);
 router.get("/policy", getAllPolicy);
 router.get("/policy/:id", getPolicyById)
-router.patch("/policy", updatePolicy);
+router.patch("/policy/:id", updatePolicy);
 
 export default router
