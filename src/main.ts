@@ -9,6 +9,7 @@ const prisma = new PrismaClient({
 import authRoute from "./routes/auth"
 import clainRoute from "./routes/claim"
 import policyRoute from "./routes/policy"
+import coverageRoute from "./routes/coverage"
 
 async function main() {
     // Connect the client
@@ -28,6 +29,7 @@ async function main() {
     app.use("/api/v1", authRoute)
     app.use("/api/v1", clainRoute )
     app.use("/api/v1", policyRoute )
+    app.use("/api/v1", coverageRoute )
 
     const port = process.env.PORT || 10000
     app.listen(port, (error: unknown) => {

@@ -53,7 +53,7 @@ model ClaimType {
 
 model Policy {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  title       String @unique
+  title       String     @unique
   description String
   price       Int        @db.Int
   banner      String
@@ -62,8 +62,9 @@ model Policy {
 
 model Coverage {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
+  title       String @unique
   description String
+  banner      String
   price       Int     @db.Int
   Policy      Policy? @relation(fields: [policyId], references: [id])
   policyId    String? @db.ObjectId
@@ -102,8 +103,6 @@ enum confirmed {
   true
   false
 }
-
-
 
 // type Address {
 //   street String?
