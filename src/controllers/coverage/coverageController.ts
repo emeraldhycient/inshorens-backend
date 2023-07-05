@@ -15,11 +15,11 @@ export const createCoverage = async (req: any, res: any) => {
     )
     if (exist) return res.status(400).json({ message: `${messages?.claimCategory?.fail}, Title already exist` })
     try {
-        const coverage = await prisma.coverage.create({
+        const coverage = policyId ? await prisma.coverage.create({
             data: {
                 Policy: {
                     connect: {
-                        id : policyId
+                        id: policyId
                     }
                 },
                 title,
@@ -27,7 +27,16 @@ export const createCoverage = async (req: any, res: any) => {
                 price,
                 banner
             }
-        })
+        }) : await prisma.coverage.create({
+            data: {
+                title,
+                description,
+                price,
+                banner
+            }
+        }
+        )
+
         res.status(200).json({
             message: messages.createPolicy.success,
             coverage
@@ -47,7 +56,7 @@ export const getAllCoverage = async (req: any, res: any) => {
     try {
         const coverage = await prisma.coverage.findMany({
             include: {
-                Policy: true, 
+                Policy: true,
             },
         })
         res.status(200).json({
