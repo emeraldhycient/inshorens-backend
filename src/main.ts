@@ -19,7 +19,6 @@ async function main() {
     app.use(express.static("public"))
     // app.set("view engine", "ejs")
     // app.set("views", "./views")
-    // app.use(express.static("public"))
     app.get("/api/v1/", (req: any, res: any) => {
         res.send(req.ip)
         res.status(200)

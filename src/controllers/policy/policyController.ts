@@ -29,6 +29,8 @@ export const createPolicy = async (req: any, res: any) => {
             policy
         })
     } catch (error) {
+        console.log(error)
+
         res.status(500).json({
             message: messages.createPolicy.fail,
             error
@@ -95,6 +97,7 @@ export const updatePolicy = async (req: any, res: any) => {
             policy
         })
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             message: messages.updatePolicy.fail,
             error
