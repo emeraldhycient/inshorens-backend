@@ -1,4 +1,3 @@
-import { Coverage } from './../../../node_modules/.prisma/client/index.d';
 import { PrismaClient } from '@prisma/client'
 import { messages } from '../../constants/messages'
 
