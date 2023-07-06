@@ -22,14 +22,14 @@ export const createCoverage = async (req: any, res: any) => {
         })
 
         res.status(200).json({
-            message: messages.createPolicy.success,
+            message: messages.createCoverage.success,
             coverage
         })
     } catch (error) {
         console.log(error)
 
         res.status(500).json({
-            message: messages.createPolicy.fail,
+            message: messages.createCoverage.fail,
             error
         })
     }
@@ -44,12 +44,12 @@ export const getAllCoverage = async (req: any, res: any) => {
             },
         })
         res.status(200).json({
-            message: messages.getPolicy.success,
+            message: messages.getCoverage.success,
             coverage
         })
     } catch (error) {
         res.status(500).json({
-            message: messages.getPolicy.fail,
+            message: messages.getCoverage.fail,
             error
         })
     }
@@ -68,12 +68,12 @@ export const getCoverageById = async (req: any, res: any) => {
             },
         })
         res.status(200).json({
-            message: messages.getPolicy.success,
+            message: messages.getCoverage.success,
             coverage
         })
     } catch (error) {
         res.status(500).json({
-            message: messages.getPolicy.fail,
+            message: messages.getCoverage.fail,
             error
         })
     }
@@ -112,13 +112,13 @@ export const updateCoverage = async (req: any, res: any) => {
                 }
             }) 
         res.status(200).json({
-            message: messages.updatePolicy.success,
+            message: messages.updateCoverage.success,
             coverage
         })
     } catch (error) {
         console.log(error)
         res.status(500).json({
-            message: messages.updatePolicy.fail,
+            message: messages.updateCoverage.fail,
             error
         })
     }

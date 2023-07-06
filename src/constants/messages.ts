@@ -46,6 +46,18 @@ export const updatePolicy = {
     success: "Policy  updated successfully",
     fail: "unable to update policy,an internal server error occured",
 }   
+export const createCoverage = {
+    success: "coverage  created successfully",
+    fail: "coverage creation failed",
+}   
+export const getCoverage = {
+    success: "coverage  fetched successfully",
+    fail: "unable to fetch coverage,an internal server error occured",
+}   
+export const updateCoverage = {
+    success: "coverage  updated successfully",
+    fail: "unable to update coverage,an internal server error occured",
+}   
 
 
 export const messages = {
@@ -57,5 +69,8 @@ export const messages = {
     createClaim,
     createPolicy,
     getPolicy,
-    updatePolicy
+    updatePolicy,
+    createCoverage,
+    updateCoverage,
+    getCoverage
 }
