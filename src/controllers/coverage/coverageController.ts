@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 export const createCoverage = async (req: any, res: any) => {
     const { title, description, price, banner, policyId } = req.body
     try {
-        const coverage = policyId ? await prisma.coverage.create({
+        const coverage =  await prisma.coverage.create({
             data: {
                 Policy: {
                     connect: {
@@ -19,15 +19,7 @@ export const createCoverage = async (req: any, res: any) => {
                 price,
                 banner
             }
-        }) : await prisma.coverage.create({
-            data: {
-                title,
-                description,
-                price,
-                banner
-            }
-        }
-        )
+        })
 
         res.status(200).json({
             message: messages.createPolicy.success,
@@ -92,7 +84,7 @@ export const updateCoverage = async (req: any, res: any) => {
     const { id } = req.params
     const { title, description, price, banner, policyId } = req.body
     try {
-        const coverage = await prisma.coverage.update({
+        const coverage = policyId ? await prisma.coverage.update({
             where: {
                 id
             },
@@ -107,7 +99,18 @@ export const updateCoverage = async (req: any, res: any) => {
                 price,
                 banner
             }
-        })
+        }) : 
+            await prisma.coverage.update({
+                where: {
+                    id
+                },
+                data: {
+                    title,
+                    description,
+                    price,
+                    banner
+                }
+            }) 
         res.status(200).json({
             message: messages.updatePolicy.success,
             coverage
