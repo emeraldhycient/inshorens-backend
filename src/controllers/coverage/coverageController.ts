@@ -5,7 +5,7 @@ import { messages } from '../../constants/messages'
 const prisma = new PrismaClient()
 
 export const createCoverage = async (req: any, res: any) => {
-    const { title, description, price, banner, policyId } = req.body
+    const { title, description, price, icon, policyId } = req.body
     try {
         const coverage =  await prisma.coverage.create({
             data: {
@@ -17,7 +17,7 @@ export const createCoverage = async (req: any, res: any) => {
                 title,
                 description,
                 price,
-                banner
+                icon
             }
         })
 
@@ -82,7 +82,7 @@ export const getCoverageById = async (req: any, res: any) => {
 
 export const updateCoverage = async (req: any, res: any) => {
     const { id } = req.params
-    const { title, description, price, banner, policyId } = req.body
+    const { title, description, price, icon, policyId } = req.body
     try {
         const coverage = policyId ? await prisma.coverage.update({
             where: {
@@ -97,7 +97,7 @@ export const updateCoverage = async (req: any, res: any) => {
                 title,
                 description,
                 price,
-                banner
+                icon
             }
         }) : 
             await prisma.coverage.update({
@@ -108,7 +108,7 @@ export const updateCoverage = async (req: any, res: any) => {
                     title,
                     description,
                     price,
-                    banner
+                    icon
                 }
             }) 
         res.status(200).json({

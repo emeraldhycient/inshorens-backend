@@ -5,7 +5,7 @@ import { messages } from '../../constants/messages'
 const prisma = new PrismaClient()
 
 export const createPolicy = async (req: any, res: any) => {
-    const { title, description, price, banner, coverages } = req.body
+    const { title, description, price, banner, coverages,icon } = req.body
     const exist = await prisma.policy.findUnique({
         where: {
             title
@@ -21,7 +21,8 @@ export const createPolicy = async (req: any, res: any) => {
                 description,
                 price,
                 banner,
-                coverages
+                coverages,
+                icon
             }
         })
         res.status(200).json({
@@ -85,7 +86,7 @@ export const getPolicyById = async (req: any, res: any) => {
 
 export const updatePolicy = async (req: any, res: any) => {
     const { id } = req.params
-    const { title, description, price, banner, coverages } = req.body
+    const { title, description, price, banner, coverages,icon } = req.body
     try {
         const policy = await prisma.policy.update({
             where: {
@@ -96,7 +97,8 @@ export const updatePolicy = async (req: any, res: any) => {
                 description,
                 price,
                 banner,
-                coverages
+                coverages,
+                icon
             }
         })
         res.status(200).json({

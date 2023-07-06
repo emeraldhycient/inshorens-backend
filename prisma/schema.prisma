@@ -57,6 +57,7 @@ model Policy {
   description String
   price       Int        @db.Int
   banner      String
+  icon      String
   coverages   Coverage[]
 }
 
@@ -64,7 +65,7 @@ model Coverage {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  banner      String
+  icon      String
   price       Int     @db.Int
   Policy      Policy? @relation(fields: [policyId], references: [id])
   policyId    String? @db.ObjectId
