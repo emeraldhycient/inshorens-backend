@@ -1,10 +1,10 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
 const bcrypt = require('bcryptjs');
 import { signAccessToken } from '../../utils/token/jwt'
 import { messages } from '../../constants/messages';
 const createError = require('http-errors')
+import { getPrisma } from '../../prisma';
+
+const prisma = getPrisma();
 
 const loginController = async (req: any, res: any) => {
     const { email, password } = req.body;

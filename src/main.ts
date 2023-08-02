@@ -1,11 +1,9 @@
 //Use req.ip or req.ips in the usual way
 const express = require("express")
 const app = express()
-import { PrismaClient } from '@prisma/client'
 require('dotenv').config()
-const prisma = new PrismaClient({
-    log: ["query"]
-})
+import { getPrisma, disconnectPrisma } from './prisma';
+
 import authRoute from "./routes/auth"
 import clainRoute from "./routes/claim"
 import policyRoute from "./routes/policy"
@@ -13,7 +11,15 @@ import coverageRoute from "./routes/coverage"
 
 async function main() {
     // Connect the client
-    await prisma.$connect()
+    const prisma = getPrisma();
+
+    // Your application logic here...
+
+    // Gracefully disconnect the Prisma Client instance when the application exits
+    process.on('beforeExit', async () => {
+        await disconnectPrisma();
+    });
+    
     app.set('trust proxy', true)
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
@@ -38,11 +44,8 @@ async function main() {
 }
 
 main()
-    .then(async () => {
-        await prisma.$disconnect()
-    })
     .catch(async (e) => {
         console.error(e)
-        await prisma.$disconnect()
+        await disconnectPrisma();
         // process.exit(1)
     })

@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client'
 import { messages } from '../../constants/messages'
+import { getPrisma } from '../../prisma';
 
-const prisma = new PrismaClient()
+const prisma = getPrisma();
 
 export const getClaimsByUserIdController = async (req: any, res: any)=>{
 

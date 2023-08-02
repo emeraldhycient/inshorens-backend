@@ -1,11 +1,12 @@
-import { PrismaClient } from '@prisma/client'
 const nodemailer = require("nodemailer");
-const prisma = new PrismaClient()
 const bcrypt = require('bcryptjs');
 import { signAccessToken } from '../../utils/token/jwt'
 import { messages } from '../../constants/messages';
 import { getIpServiceInfo } from '../../services/ipservice/Ipwhois.service';
 import crypto from 'crypto';
+import { getPrisma } from '../../prisma';
+
+const prisma = getPrisma();
 
 const registerController = async (req: any, res: any) => {
   

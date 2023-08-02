@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client'
 import express, { Request, Response } from 'express';
+import { getPrisma } from '../../prisma';
 
-const prisma = new PrismaClient()
+const prisma = getPrisma();
 
 const confirmTokenController = async (req: Request, res: Response) => {
     try {

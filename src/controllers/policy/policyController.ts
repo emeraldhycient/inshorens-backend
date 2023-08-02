@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client'
 import { messages } from '../../constants/messages'
+import { getPrisma } from '../../prisma';
 
+const prisma = getPrisma();
 
-const prisma = new PrismaClient()
 
 export const createPolicy = async (req: any, res: any) => {
     const { title, description, price, banner, coverages,icon } = req.body

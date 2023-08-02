@@ -22,3 +22,16 @@ export type IpInfo = {
         utc: string
     }
 };
+
+export type transactionLog = {
+    transactionType: transactionActions,
+    details: string,
+    amount: number,
+    paymentMethod: string,
+    userId?: string
+}
+
+
+enum transactionActions {
+    policy_purchase, policy_renewal, premium_payment, claim_submission, unknown
+}

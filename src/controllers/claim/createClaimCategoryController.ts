@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client'
 import { messages } from '../../constants/messages'
+import { getPrisma } from '../../prisma';
 
+const prisma = getPrisma();
 
 const createClaimCategoryController = async (req: any, res: any) => {
-    const prisma = new PrismaClient()
     const { title } = req.body
     if (!title) return res.status(400).json({ message: `${messages?.claimCategory?.fail}, Title is required` })
     try {
