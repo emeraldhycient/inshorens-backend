@@ -24,14 +24,16 @@ export type IpInfo = {
 };
 
 export type transactionLog = {
-    transactionType: transactionActions,
+    transactionType: TransactionAction,
     details: string,
     amount: number,
     paymentMethod: string,
     userId?: string
 }
 
-
-enum transactionActions {
-    policy_purchase, policy_renewal, premium_payment, claim_payout, unknown
+enum TransactionAction {
+    PolicyPurchase = 'policy_purchase',
+    PremiumRenewal = 'policy_renewal',
+    PremiumPayment = 'premium_payment',
+    Unknown = "unknown"
 }

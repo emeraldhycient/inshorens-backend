@@ -139,7 +139,6 @@ enum transactionType {
   policy_purchase
   policy_renewal
   premium_payment
-  claim_payout
   unknown
 }
 
