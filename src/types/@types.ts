@@ -33,5 +33,5 @@ export type transactionLog = {
 
 
 enum transactionActions {
-    policy_purchase, policy_renewal, premium_payment, claim_submission, unknown
+    policy_purchase, policy_renewal, premium_payment, claim_payout, unknown
 }
