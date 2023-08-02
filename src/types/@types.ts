@@ -31,7 +31,7 @@ export type transactionLog = {
     userId?: string
 }
 
-enum TransactionAction {
+export enum TransactionAction {
     PolicyPurchase = 'policy_purchase',
     PremiumRenewal = 'policy_renewal',
     PremiumPayment = 'premium_payment',
