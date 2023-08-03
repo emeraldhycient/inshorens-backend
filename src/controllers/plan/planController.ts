@@ -7,7 +7,7 @@ const prisma = getPrisma();
 
 
 export const createPlan = async (req: any, res: any) => {
-    const { title, price, duration, addons } = req.body
+    const { title, price, duration, addons,deviceDetails } = req.body
 
     try {
         const startDate = new Date()
@@ -37,7 +37,24 @@ export const createPlan = async (req: any, res: any) => {
                 duration,
                 startDate,
                 endDate,
-                User: { connect: { id: req?.user.payload.id } }
+                User: { connect: { id: req?.user.payload.id } },
+                UserDevice: {
+                    create: [
+                        {
+                            brand: deviceDetails?.brand,
+                            model: deviceDetails?.model,
+                            imel: deviceDetails?.imel,
+                            value: deviceDetails?.price,
+                            images: deviceDetails?.images,
+                            receipt: deviceDetails?.recipt,
+                     }
+                    ]
+                }
+            },
+            include: {
+                addons: true,
+                UserDevice: true,
+                User: true
             }
         })
 
