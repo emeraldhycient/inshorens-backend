@@ -46,6 +46,18 @@ export const updatePolicy = {
     success: "Policy  updated successfully",
     fail: "unable to update policy,an internal server error occured",
 }   
+export const createPlan = {
+    success: "Plan  created successfully",
+    fail: "Plan creation failed",
+}   
+export const getPlan = {
+    success: "Plan  fetched successfully",
+    fail: "unable to fetch plan,an internal server error occured",
+}   
+export const updatePlan = {
+    success: "Plan  updated successfully",
+    fail: "unable to update plan,an internal server error occured",
+}   
 export const createCoverage = {
     success: "coverage  created successfully",
     fail: "coverage creation failed",
@@ -70,6 +82,9 @@ export const messages = {
     createPolicy,
     getPolicy,
     updatePolicy,
+    createPlan,
+    getPlan,
+    updatePlan,
     createCoverage,
     updateCoverage,
     getCoverage

@@ -49,14 +49,14 @@ export const createPlan = async (req: any, res: any) => {
             amount: price
         })
         res.status(200).json({
-            message: messages.createPolicy.success,
+            message: messages.createPlan.success,
             data: { transaction, plan }
         })
     } catch (error) {
         console.log(error)
 
         res.status(500).json({
-            message: messages.createPolicy.fail,
+            message: messages.createPlan.fail,
             error
         })
     }
@@ -74,12 +74,12 @@ export const getUserPlans = async (req: any, res: any) => {
             }
         })
         res.status(200).json({
-            message: messages.getPolicy.success,
+            message: messages.getPlan.success,
             data: plans
         })
     } catch (error) {
         res.status(500).json({
-            message: messages.getPolicy.fail,
+            message: messages.getPlan.fail,
             error
         })
     }
@@ -98,12 +98,12 @@ export const getPlanById = async (req: any, res: any) => {
             },
         })
         res.status(200).json({
-            message: messages.getPolicy.success,
+            message: messages.getPlan.success,
             data : plan
         })
     } catch (error) {
         res.status(500).json({
-            message: messages.getPolicy.fail,
+            message: messages.getPlan.fail,
             error
         })
     }
