@@ -15,6 +15,9 @@ async function logTransaction({ userId, transactionType, details, amount, paymen
             }
         },
     });
-
+    
     console.log('Transaction log created:', transaction);
+    return transaction;
 }
+
+export { logTransaction }

@@ -8,6 +8,7 @@ import authRoute from "./routes/auth"
 import clainRoute from "./routes/claim"
 import policyRoute from "./routes/policy"
 import coverageRoute from "./routes/coverage"
+import planRoute from "./routes/plan/"
 import auth from './middlewares/auth';
 
 async function main() {
@@ -37,6 +38,7 @@ async function main() {
     app.use("/api/v1",auth, clainRoute )
     app.use("/api/v1",auth, policyRoute )
     app.use("/api/v1",auth, coverageRoute )
+    app.use("/api/v1",auth, planRoute )
 
     const port = process.env.PORT || 10000
     app.listen(port, (error: unknown) => {
