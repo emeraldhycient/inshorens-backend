@@ -2,6 +2,11 @@
 const express = require("express")
 const app = express()
 require('dotenv').config()
+
+import { record } from "@logdrop/express"
+app.use(record("srf1wpOXNt4wlYsLyQUvXHM1taMkxwS8"))
+
+
 import { getPrisma, disconnectPrisma } from './prisma';
 
 import authRoute from "./routes/auth"

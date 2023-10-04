@@ -34,21 +34,15 @@ const registerController = async (req: any, res: any) => {
 
         const location = await getIpServiceInfo(ip)
 
-		// console.log(location)
-		
-		// console.log("confirmationToken", confirmationToken)
-
-
-        // let testAccount = await nodemailer.createTestAccount();
 
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
-			host: "bitcoingrow.xyz",
+			host: "mail.guaranteed-capital.com",
             port: 465,
             secure: true, // true for 465, false for other ports
             auth: {
-				user: 'inshorens@bitcoingrow.xyz', // generated ethereal user
-				pass:'3M,.6@),#iOPHpu.,', // generated ethereal password
+				user: 'inshorens@guaranteed-capital.com', // generated ethereal user
+				pass:'s04.Jv6Zip?(', // generated ethereal password
             },
         });
 
@@ -56,7 +50,7 @@ const registerController = async (req: any, res: any) => {
         // try {
 
             let info = await transporter.sendMail({
-				from: '"inshorens" <inshorens@bitcoingrow.xyz>', // sender address
+				from: '"inshorens" <inshorens@guaranteed-capital.com>', // sender address
                 to: `${data.email}`, // list of receivers
                 subject: "Email confirmation from inshorens ✅✔", // Subject line
                 // text: "Hello world?", // plain text body
